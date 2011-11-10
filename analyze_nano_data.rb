@@ -114,11 +114,13 @@ class BatchFile
   
   # returns an array of strings
   def to_table
-    begin_col = @headers["Data Header Begin Column"].to_i
-    parameters = @parameters.slice(0,begin_col)
-    headers = "Parameter,Value," + @parameters.slice(begin_col, @parameters.length).join(',')
+    begin_col = @headers["Data Header Begin Column"].to_i - 1
+    @parameters.insert(begin_col, @parameters.shift)
+    parameters = @parameters[0,begin_col]
+    headers = "Parameter,Value," + @parameters[begin_col..-1].join(',')
     table = [headers]
-    @results.each_with_index do |result, i1|
+    @results.each_with_index do |r, i1|
+      result = r.insert(begin_col, r.shift)
       parameters.each_with_index do |p, i2|
         table[i1*parameters.length + i2.next] = "#{p},#{result[i2]},#{result.slice(begin_col, result.length).join(',')}"
       end
@@ -162,6 +164,12 @@ class BatchFile
     end
   end
 
+end
+
+class Array
+  def first_to_last
+    self.push self.shift
+  end
 end
 
 if __FILE__  == $0
