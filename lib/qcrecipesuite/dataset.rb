@@ -1,19 +1,18 @@
-require 'csv'
+require 'statsample'
 
 module QCRecipeSuite
   class Dataset
     def initialize(file)
+      temp = []
       file.each do |line|
-        CSV.parse(line) do |row|
-          case row[0]
-          when /^Date/
-            points << Point.new
-            points.last[:datetime] = DateTime.strptime(row[1], '%m/%d/%Y %H:%M')
-          when [/^Film/, /^Stage/, /^Lot/, /^Wafer/]
-            points.last[row[0][/^([\w\s]*):$/, 1].strip.downcase.gsub(/\s/, '').to_sym] = row[1]
-          end
+        if line =~ /^[\s,]*$/
+          points << Point.new(temp)
+          temp.clear
+        else
+          temp << line
         end
       end
+      points << Point.new(temp) unless temp.empty?
     end
 
     def points
@@ -35,17 +34,25 @@ module QCRecipeSuite
     end
 
     def mean
+      @mean ||= points_as_float.to_scale.mean
     end
 
     def stdev
+      @stdev ||= points_as_float.to_scale.standard_deviation_sample
     end
 
     def lowerlimit
-      mean - 3 * stdev
+      @lcl ||= mean - 3 * stdev
     end
 
     def upperlimit
-      mean + 3 * stdev
+      @ucl ||= mean + 3 * stdev
+    end
+
+    private
+
+    def points_as_float
+      @paf ||= points.map{|point| point.parameters[:thick1].to_f}
     end
   end
 end

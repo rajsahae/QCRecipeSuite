@@ -5,9 +5,9 @@ module QCRecipeSuite
     describe "#compare" do
 
       let(:output) { double('output') }
-      let(:original) { File.new('data/NSTD 30x Dyn 10.0.0.0 FX Pad6.csv', 'r') }
-      let(:copy) { File.new('data/NSTD 30x Dyn 10.0.0.0 FX Pad6 - Copy.csv', 'r') }
-      let(:bad) { File.new('data/NSTD 30x Dyn 10.0.0.0 FX Pad6 - Bad.csv', 'r') }
+      let(:original) { File.new('data/spec/analyzer/original.csv', 'r') }
+      let(:copy) { File.new('data/spec/analyzer/copy.csv', 'r') }
+      let(:bad) { File.new('data/spec/analyzer/bad.csv', 'r') }
       let(:analyzer) { Analyzer.new(output) }
 
       it "prints PASSED for two files that are exactly the same" do
