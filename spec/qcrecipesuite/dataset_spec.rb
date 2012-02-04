@@ -19,22 +19,22 @@ module QCRecipeSuite
 
     describe "#similar_to?" do
       it "should return true for a similar set" do
-        set1.similar_to?(set2).should be_true
+        set1.should be_similar_to(set2)
       end
 
       it "should return false for a dissimilar set" do
-        set1.similar_to?(set3).should be_false
-        set2.similar_to?(set3).should be_false
+        set1.should_not be_similar_to(set3)
+        set2.should_not be_similar_to(set3)
       end
     end
 
     describe "#within_limits_of?" do
       it "should return true for a set within limits of another set" do
-        set1.within_limits_of?(set2).should be_true
+        set1.should be_within_limits_of(set2)
       end
 
       it "should return false for a set not within limits of another set" do
-        set3.within_limits_of?(set1).should be_false
+        set3.should_not be_within_limits_of(set1)
       end
     end
     
