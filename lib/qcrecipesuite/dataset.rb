@@ -5,7 +5,7 @@ module QCRecipeSuite
     def initialize(file)
       temp = []
       file.each do |line|
-        if line =~ /^[\s,]*$/
+        if line.force_encoding('Windows-1252') =~ /^[\s,]*$/
           points << Point.new(temp)
           temp.clear
         else

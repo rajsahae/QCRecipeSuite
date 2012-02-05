@@ -7,7 +7,7 @@ module QCRecipeSuite
     def initialize(lines)
       keys, values = []
       lines.each do |line|
-        CSV.parse(line) do |row|
+        CSV.parse(line.force_encoding('Windows-1252')) do |row|
           case row.compact[0]
           when /^Date/
             @datetime = DateTime.strptime(row[1], '%m/%d/%Y %H:%M')
