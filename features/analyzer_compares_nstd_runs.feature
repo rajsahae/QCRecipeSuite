@@ -20,3 +20,14 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
     Given two database csv files "data/cucumber/original.csv" and "data/cucumber/bad.csv"
     When compared to each other
     Then the analyzer should print "FAILED"
+
+  Scenario: Comparison of good DB files with 2 stage groups
+    Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-good.csv"
+    When compared to each other
+    Then the analyzer should print "PASSED"
+
+
+  Scenario: Comparison of bad DB files with 2 stage groups
+    Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-bad.csv"
+    When compared to each other
+    Then the analyzer should print "FAILED"
