@@ -12,11 +12,11 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
   or not the test has passed or failed.
 
   Scenario: Comparison of identical NanoStandard N2000 DB files
-    Given two database csv files that are exactly the same
+    Given two database csv files "data/cucumber/original.csv" and "data/cucumber/copy.csv"
     When compared to each other
     Then the analyzer should print "PASSED"
 
   Scenario: Comparison of different NanoStandard N2000 DB files
-    Given two database csv files that are from the same pad but very different
+    Given two database csv files "data/cucumber/original.csv" and "data/cucumber/bad.csv"
     When compared to each other
     Then the analyzer should print "FAILED"

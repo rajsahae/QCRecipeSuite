@@ -12,9 +12,9 @@ def output
   @output ||= Output.new
 end
 
-Given /^two database csv files that are exactly the same$/ do
-  @file1 = File.open('data/cucumber/NSTD 30x Dyn 10.0.0.0 FX Pad6.csv', 'r')
-  @file2 = File.open('data/cucumber/NSTD 30x Dyn 10.0.0.0 FX Pad6 - Copy.csv', 'r')
+Given /^two database csv files "([^"]*)" and "([^"]*)"$/ do |file1, file2|
+  @file1 = File.open(file1, 'r')
+  @file2 = File.open(file2, 'r')
 end
 
 When /^compared to each other$/ do
@@ -24,11 +24,6 @@ end
 
 Then /^the analyzer should print "([^"]*)"$/ do |message|
   output.messages.should include(message)
-end
-
-Given /^two database csv files that are from the same pad but very different$/ do
-  @file1 = File.open('data/cucumber/NSTD 30x Dyn 10.0.0.0 FX Pad6.csv', 'r')
-  @file2 = File.open('data/cucumber/NSTD 30x Dyn 10.0.0.0 FX Pad6 - Bad.csv', 'r')
 end
 
 After do
