@@ -24,8 +24,18 @@ module QCRecipeSuite
       # Deviation we will define Set1.similar_to?(Set2) to be true as long as:
       # Set2.mean-3*Set2.stdev < Set1.mean < Set2.mean+3*Set2.stdev and vice
       # versa
-      self.within_limits_of?(otherset) &&
-        otherset.within_limits_of?(self)
+      if groups.size > 1
+        groups.reject do |group|
+          if otherset.has_group? group.name
+            group.similar_to? otherset.groups[group.name]
+          else
+            true
+          end
+        end
+      else
+        self.within_limits_of?(otherset) &&
+          otherset.within_limits_of?(self)
+      end
     end
 
     def within_limits_of? otherset
@@ -49,10 +59,18 @@ module QCRecipeSuite
       @ucl ||= mean + 3 * stdev
     end
 
+    def groups
+      @groups ||= generate_groups
+    end
+
     private
 
     def points_as_float
       @paf ||= points.map{|point| point.parameters[:thick1].to_f}
+    end
+
+    def generate_groups
+      []
     end
   end
 end
