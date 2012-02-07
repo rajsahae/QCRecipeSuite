@@ -10,7 +10,11 @@ module QCRecipeSuite
         CSV.parse(line.force_encoding('Windows-1252')) do |row|
           case row.compact[0]
           when /^Date/
-            @datetime = DateTime.strptime(row[1], '%m/%d/%Y %H:%M')
+            if row[1].match(/\d$/)
+              @datetime = DateTime.strptime(row[1], '%m/%d/%Y %H:%M')
+            else
+              @datetime = DateTime.parse(row[1])
+            end
           when /^(Film)|(Stage)|(Lot)|(Wafer)/
             send(attrib_clean(row[0]), row[1])
           when /^Title/
