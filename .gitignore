@@ -1,2 +1,4 @@
 archive/*
 *.swp
+data/spec/dataset/2groups 4pts summary.csv
+data/spec/dataset/2groups 60pts summary.csv
