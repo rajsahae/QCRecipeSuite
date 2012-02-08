@@ -2,9 +2,9 @@ require 'statsample'
 
 module QCRecipeSuite
   class Dataset
-    def initialize(file)
-      temp = []
-      file.each do |line|
+    def initialize(file, output=STDOUT)
+      @output = output
+      leftovers = file.inject([]) do |temp, line|
         if line.force_encoding('Windows-1252') =~ /^[\s,]*$/
           points << Point.new(temp)
           temp.clear
@@ -12,7 +12,7 @@ module QCRecipeSuite
           temp << line
         end
       end
-      points << Point.new(temp) unless temp.empty?
+      points << Point.new(leftovers) unless leftovers.empty?
     end
 
     def points

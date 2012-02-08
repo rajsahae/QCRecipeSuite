@@ -5,8 +5,8 @@ module QCRecipeSuite
     end
 
     def compare(oldfile, newfile)
-      oldset = Dataset.new(oldfile)
-      newset = Dataset.new(newfile)
+      oldset = Dataset.new(oldfile, @output)
+      newset = Dataset.new(newfile, @output)
 
       puts oldset.similar_to?(newset) ? "PASSED" : "FAILED"
     end

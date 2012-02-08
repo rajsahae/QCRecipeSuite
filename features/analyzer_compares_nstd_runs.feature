@@ -26,7 +26,6 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
     When compared to each other
     Then the analyzer should print "PASSED"
 
-
   Scenario: Comparison of bad DB files with 2 stage groups
     Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-bad.csv"
     When compared to each other
