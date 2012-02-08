@@ -90,60 +90,65 @@ module QCRecipeSuite
         it "should have the correct number of groups" do
           set1.should have(2).groups
         end
+        it "should have the correct number of points in each subgroup" do
+          set1.groups[0].should have(30).points
+          set1.groups[1].should have(30).points
+        end
       end
 
       describe "#similar_to?" do
         it "should return true for a similar set" do
-          # set1.should be_similar_to(set2)
+          pending "some more work"
+          set1.should be_similar_to(set2)
         end
 
         it "should return false for a dissimilar set" do
-          # set1.should_not be_similar_to(set3)
-          # set2.should_not be_similar_to(set3)
+          pending "some more work"
+          set1.should_not be_similar_to(set3)
+          set2.should_not be_similar_to(set3)
         end
       end
 
       describe "#within_limits_of?" do
         it "should return true for a set within limits of another set" do
-          # set1.should be_within_limits_of(set2)
+          pending "some more work"
+          set1.should be_within_limits_of(set2)
         end
 
         it "should return false for a set not within limits of another set" do
-          # set3.should_not be_within_limits_of(set1)
+          pending "some more work"
+          set3.should_not be_within_limits_of(set1)
         end
       end
 
       describe "statistical methods" do
+
         it "should calculate the mean of the points" do
-=begin
+          pending "some more work"
           set1.mean.should be_within(mean_delta).of(10189.24)
           set2.mean.should be_within(mean_delta).of(10189.51)
           set3.mean.should be_within(mean_delta).of(10187.74)
-=end
         end
 
         it "should calculate the stdev of the points" do
-=begin
+          pending "some more work"
           set1.stdev.should be_within(stdev_delta).of(0.113137)
           set2.stdev.should be_within(stdev_delta).of(0.205061)
           set3.stdev.should be_within(stdev_delta).of(0.59397)
-=end
         end
 
         it "should calculate the lower limit of the points" do
-=begin
+          pending "some more work"
           set1.lowerlimit.should be_within(mean_delta).of(10188.9)
           set2.lowerlimit.should be_within(mean_delta).of(10188.89)
           set3.lowerlimit.should be_within(mean_delta).of(10185.96)
-=end
         end
 
         it "should calculate the upper limit of the points" do
-=begin
+          pending "some more work"
           set1.upperlimit.should be_within(mean_delta).of(10189.58)
           set2.upperlimit.should be_within(mean_delta).of(10190.12)
           set3.upperlimit.should be_within(mean_delta).of(10189.52)
-=end
         end
       end
 

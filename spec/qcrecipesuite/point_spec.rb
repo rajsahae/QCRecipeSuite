@@ -43,6 +43,28 @@ module QCRecipeSuite
         @point.parameters.should == parameters
       end
 
+      it "should provide it's group info" do
+        hash = ["SQC Acq-SR OCD Short2 FX", "4X Pad6 FX", "SQC NSTD", "# 24"].join(':').hash
+        @point.group_id.should == hash
+      end
+
+      context "groups" do
+        before(:each) do
+          single_point.rewind
+        end
+
+        it "should identify a point in it's own group" do
+          point = Point.new(single_point.readlines)
+          @point.in_same_group?(point).should be_true
+        end
+
+        it "should identify a point not in it's own group" do
+          point = Point.new(single_point.readlines)
+          point.lotid = "Fake ID"
+          @point.in_same_group?(point).should be_false
+        end
+      end
+
       after(:each) do
         single_point.close
       end

@@ -70,7 +70,14 @@ module QCRecipeSuite
     end
 
     def generate_groups
-      []
+      points.inject([]) do |memo, item|
+        if subset = memo.find{|sub| sub.first.in_same_group? item}
+          subset.push item
+        else
+          memo.push [item]
+        end
+        memo
+      end
     end
   end
 end

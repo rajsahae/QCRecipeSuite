@@ -27,6 +27,14 @@ module QCRecipeSuite
       @parameters = Hash[keys.zip values]
     end
 
+    def group_id
+      @group_id ||= generate_group_id
+    end
+
+    def in_same_group? otherpoint
+      group_id.eql? otherpoint.group_id
+    end
+
     private
 
     def attrib_clean string
@@ -35,6 +43,10 @@ module QCRecipeSuite
 
     def key_clean string
       string[/^([\w\d]*)/, 1].downcase.to_sym
+    end
+
+    def generate_group_id
+      [filmname, stagegroup, lotid, waferid].join(':').hash
     end
   end
 end
