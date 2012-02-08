@@ -1,6 +1,8 @@
-You need the following gems to run this code:
+Dependencies:
 statsample
 
 To-Do:
-Add cucumber and spec scenarios and specs for more complex DB cases
+Add cucumber and spec scenarios and specs for more complex DB cases:
+  * Need to add ability to compare any changing parameter value (right now hardcoded for Thick1)
+  * Need to add ability to compare by die (for NanoOCD wafer)
 Think about using fasterCSV to replace current CSV functionality

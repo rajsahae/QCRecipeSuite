@@ -35,6 +35,10 @@ module QCRecipeSuite
       group_id.eql? otherpoint.group_id
     end
 
+    def groupname
+      [@filmname, @stagegroup, @lotid, @waferid].join(':')
+    end
+
     private
 
     def attrib_clean string

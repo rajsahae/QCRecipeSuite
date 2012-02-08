@@ -25,11 +25,11 @@ module QCRecipeSuite
       # Set2.mean-3*Set2.stdev < Set1.mean < Set2.mean+3*Set2.stdev and vice
       # versa
       if groups.size > 1
-        groups.reject do |group|
+        groups.all? do |group|
           if otherset.has_group? group.name
-            group.similar_to? otherset.groups[group.name]
+            group.within_limits_of? otherset[group.name]
           else
-            true
+           true
           end
         end
       else
@@ -63,7 +63,12 @@ module QCRecipeSuite
       @groups ||= generate_groups
     end
 
+    def [] groupname
+      groups.find{|datagroup| datagroup.name.eql? groupname}
+    end
+
     def has_group? groupname
+      groups.any?{|datagroup| datagroup.name.eql? groupname}
     end
 
     private
@@ -92,6 +97,7 @@ module QCRecipeSuite
     end
 
     def name
+      @points.first.groupname
     end
   end
 end

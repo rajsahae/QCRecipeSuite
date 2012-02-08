@@ -108,16 +108,6 @@ module QCRecipeSuite
           end
         end
 
-        describe "#within_limits_of?" do
-          it "should return true for a set within limits of another set" do
-            set1.should be_within_limits_of(set2)
-          end
-
-          it "should return false for a set not within limits of another set" do
-            set3.should_not be_within_limits_of(set1)
-          end
-        end
-
         describe "statistical methods" do
           it "should calculate the mean of the points" do
             set1.groups[0].mean.should be_within(mean_delta).of(4308.02)
@@ -192,51 +182,59 @@ module QCRecipeSuite
           end
         end
 
-        describe "#within_limits_of?" do
-          it "should return true for a set within limits of another set" do
-            set1.should be_within_limits_of(set2)
-          end
-
-          it "should return false for a set not within limits of another set" do
-            set3.should_not be_within_limits_of(set1)
-          end
-        end
-
         describe "statistical methods" do
           it "should calculate the mean of the points" do
-            set1.groups[0].mean.should be_within(mean_delta).of(4308.02)
-            set1.groups[1].mean.should be_within(mean_delta).of(10189.44)
-            set2.groups[0].mean.should be_within(mean_delta).of(4307.99)
-            set2.groups[1].mean.should be_within(mean_delta).of(10189.42)
-            set3.groups[0].mean.should be_within(mean_delta).of(4305.36)
-            set3.groups[1].mean.should be_within(mean_delta).of(10187.42)
+            set1.groups[0].mean.should be_within(mean_delta).of(4307.99)
+            set1.groups[1].mean.should be_within(mean_delta).of(10189.43)
+            set2.groups[0].mean.should be_within(mean_delta).of(4307.96)
+            set2.groups[1].mean.should be_within(mean_delta).of(10189.41)
+            set3.groups[0].mean.should be_within(mean_delta).of(4305.46)
+            set3.groups[1].mean.should be_within(mean_delta).of(10187.41)
           end
 
           it "should calculate the stdev of the points" do
-            set1.groups[0].stdev.should be_within(stdev_delta).of(0.155379)
-            set1.groups[1].stdev.should be_within(stdev_delta).of(0.158678)
-            set2.groups[0].stdev.should be_within(stdev_delta).of(0.158441)
-            set2.groups[1].stdev.should be_within(stdev_delta).of(0.168870)
-            set3.groups[0].stdev.should be_within(stdev_delta).of(0.377591)
-            set3.groups[1].stdev.should be_within(stdev_delta).of(0.168871)
+            set1.groups[0].stdev.should be_within(stdev_delta).of(0.021213)
+            set1.groups[1].stdev.should be_within(stdev_delta).of(0.381838)
+            set2.groups[0].stdev.should be_within(stdev_delta).of(0.070711)
+            set2.groups[1].stdev.should be_within(stdev_delta).of(0.424264)
+            set3.groups[0].stdev.should be_within(stdev_delta).of(0.636396)
+            set3.groups[1].stdev.should be_within(stdev_delta).of(0.424264)
           end
 
           it "should calculate the lower limit of the points" do
-            set1.groups[0].lowerlimit.should be_within(mean_delta).of(4307.56)
-            set1.groups[1].lowerlimit.should be_within(mean_delta).of(10188.97)
-            set2.groups[0].lowerlimit.should be_within(mean_delta).of(4307.51)
-            set2.groups[1].lowerlimit.should be_within(mean_delta).of(10188.91)
-            set3.groups[0].lowerlimit.should be_within(mean_delta).of(4304.22)
-            set3.groups[1].lowerlimit.should be_within(mean_delta).of(10186.91)
+            set1.groups[0].lowerlimit.should be_within(mean_delta).of(4307.92)
+            set1.groups[1].lowerlimit.should be_within(mean_delta).of(10188.28)
+            set2.groups[0].lowerlimit.should be_within(mean_delta).of(4307.75)
+            set2.groups[1].lowerlimit.should be_within(mean_delta).of(10188.14)
+            set3.groups[0].lowerlimit.should be_within(mean_delta).of(4303.55)
+            set3.groups[1].lowerlimit.should be_within(mean_delta).of(10186.14)
           end
 
           it "should calculate the upper limit of the points" do
-            set1.groups[0].upperlimit.should be_within(mean_delta).of(4308.49)
-            set1.groups[1].upperlimit.should be_within(mean_delta).of(10189.92)
-            set2.groups[0].upperlimit.should be_within(mean_delta).of(4308.47)
-            set2.groups[1].upperlimit.should be_within(mean_delta).of(10189.93)
-            set3.groups[0].upperlimit.should be_within(mean_delta).of(4306.49)
-            set3.groups[1].upperlimit.should be_within(mean_delta).of(10187.93)
+            set1.groups[0].upperlimit.should be_within(mean_delta).of(4308.05)
+            set1.groups[1].upperlimit.should be_within(mean_delta).of(10190.58)
+            set2.groups[0].upperlimit.should be_within(mean_delta).of(4308.17)
+            set2.groups[1].upperlimit.should be_within(mean_delta).of(10190.68)
+            set3.groups[0].upperlimit.should be_within(mean_delta).of(4307.37)
+            set3.groups[1].upperlimit.should be_within(mean_delta).of(10188.68)
+          end
+        end
+
+        context "#groups" do
+          let(:group1) {"SQC Acq-SR OCD VIS:4X Pad5 Vis:SQC NSTD:# 24"}
+          let(:group2) {"SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"}
+
+          it "should track it's group size with #groups.size" do
+            set1.groups.size.should == 2
+          end
+
+          it "should indicate whether it contains a group with #have_group?" do
+            set1.should have_group(group1)
+            set1.should have_group(group2)
+          end
+
+          it "should retrieve a group name with #[name]" do
+            set1[group1].name.should == group1
           end
         end
       end
