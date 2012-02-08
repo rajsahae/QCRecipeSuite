@@ -63,6 +63,9 @@ module QCRecipeSuite
       @groups ||= generate_groups
     end
 
+    def has_group? groupname
+    end
+
     private
 
     def points_as_float
@@ -77,7 +80,18 @@ module QCRecipeSuite
           memo.push [item]
         end
         memo
+      end.inject([]) do |grps, sub|
+        grps.push Datagroup.new(sub)
       end
+    end
+  end
+
+  class Datagroup < Dataset
+    def initialize(point_array)
+      @points = point_array
+    end
+
+    def name
     end
   end
 end
