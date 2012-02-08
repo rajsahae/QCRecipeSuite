@@ -8,7 +8,7 @@ module QCRecipeSuite
       oldset = Dataset.new(oldfile, @output)
       newset = Dataset.new(newfile, @output)
 
-      puts oldset.similar_to?(newset) ? "PASSED" : "FAILED"
+      puts "FULL SET " + (oldset.similar_to?(newset) ? "PASSED" : "FAILED")
     end
 
     def puts string

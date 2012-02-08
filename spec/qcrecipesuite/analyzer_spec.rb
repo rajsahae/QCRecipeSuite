@@ -11,12 +11,12 @@ module QCRecipeSuite
       let(:analyzer) { Analyzer.new(output) }
 
       it "prints PASSED for two files that are exactly the same" do
-        output.should_receive(:puts).with('PASSED')
+        output.should_receive(:puts).with('FULL SET PASSED')
         analyzer.compare(original, copy)
       end
 
       it "prints FAILED for two files that are very different" do
-        output.should_receive(:puts).with('FAILED')
+        output.should_receive(:puts).with('FULL SET FAILED')
         analyzer.compare(original, bad) 
       end
     end
