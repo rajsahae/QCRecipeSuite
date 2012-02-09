@@ -31,26 +31,41 @@ module QCRecipeSuite
       if groups.size > 1
         groups.inject(true) do |memo, group|
           if otherset.has_group? group.name
-            if group.within_limits_of?(otherset[group.name]) && otherset[group.name].within_limits_of?(group)
-              puts 'PASSED' + ' - ' + group.name 
-              memo && true
+            if Dataset.within_each_others_limits?(group, otherset[group.name])
+              Dataset.pass(group) && memo
             else
-              puts 'FAILED' + ' - ' + group.name
-              memo && false
+              Dataset.fail(group) && memo
             end
           else
-            memo && true
+            Dataset.skip(group) && memo
           end
         end
       else
-        if self.within_limits_of?(otherset) && otherset.within_limits_of?(self)
-          puts 'PASSED' + ' - ' + otherset.name 
-          true
+        if Dataset.within_each_others_limits?(self, otherset)
+          Dataset.pass self
         else
-          puts 'FAILED' + ' - ' + otherset.name
-          false
+          Dataset.fail self
         end
       end
+    end
+
+    def Dataset.pass group
+      group.puts 'PASSED' + ' - ' + group.name
+      return true
+    end
+
+    def Dataset.fail group
+      group.puts 'FAILED' + ' - ' + group.name
+      return false
+    end
+
+    def Dataset.skip group
+      group.puts 'SKIPPED' + ' - ' + group.name
+      return true
+    end
+
+    def Dataset.within_each_others_limits?(set1, set2)
+      set1.within_limits_of?(set2) && set2.within_limits_of?(set1)
     end
 
     def within_limits_of? otherset
@@ -86,11 +101,9 @@ module QCRecipeSuite
     end
 
     def name
-      if groups.size == 1
-        groups.first.name
-      else
-        "Multi-Group name"
-      end
+      groups.inject([]) do |memo, group|
+        memo.push group.name 
+      end.join(" - ")
     end
 
     private
