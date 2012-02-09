@@ -15,7 +15,7 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
     Given two database csv files "data/cucumber/original.csv" and "data/cucumber/copy.csv"
     When compared to each other
     Then the analyzer should print "FULL SET PASSED"
-    And the analyzer should print "SQC Acq-SR OCD Short2 FX : 4X Pad6 FX : SQC NSTD : # 24 : PASSED"
+    And the analyzer should print "PASSED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
 
   Scenario: Comparison of different NanoStandard N2000 DB files
     Given two database csv files "data/cucumber/original.csv" and "data/cucumber/bad.csv"

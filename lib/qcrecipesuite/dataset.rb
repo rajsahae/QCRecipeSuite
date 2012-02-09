@@ -14,9 +14,13 @@ module QCRecipeSuite
       end
       points << Point.new(leftovers) unless leftovers.empty?
     end
-
+    
     def points
       @points ||= []
+    end
+
+    def puts string
+      @output.puts string
     end
 
     def similar_to? otherset
@@ -25,22 +29,32 @@ module QCRecipeSuite
       # Set2.mean-3*Set2.stdev < Set1.mean < Set2.mean+3*Set2.stdev and vice
       # versa
       if groups.size > 1
-        groups.all? do |group|
+        groups.inject(true) do |memo, group|
           if otherset.has_group? group.name
-            group.within_limits_of? otherset[group.name]
+            if group.within_limits_of?(otherset[group.name]) && otherset[group.name].within_limits_of?(group)
+              puts 'PASSED' + ' - ' + group.name 
+              memo && true
+            else
+              puts 'FAILED' + ' - ' + group.name
+              memo && false
+            end
           else
-           true
+            memo && true
           end
         end
       else
-        self.within_limits_of?(otherset) &&
-          otherset.within_limits_of?(self)
+        if self.within_limits_of?(otherset) && otherset.within_limits_of?(self)
+          puts 'PASSED' + ' - ' + otherset.name 
+          true
+        else
+          puts 'FAILED' + ' - ' + otherset.name
+          false
+        end
       end
     end
 
     def within_limits_of? otherset
-      otherset.lowerlimit < self.mean && 
-        self.mean < otherset.upperlimit
+      otherset.lowerlimit < self.mean && self.mean < otherset.upperlimit
     end
 
     def mean
@@ -71,6 +85,14 @@ module QCRecipeSuite
       groups.any?{|datagroup| datagroup.name.eql? groupname}
     end
 
+    def name
+      if groups.size == 1
+        groups.first.name
+      else
+        "Multi-Group name"
+      end
+    end
+
     private
 
     def points_as_float
@@ -86,14 +108,15 @@ module QCRecipeSuite
         end
         memo
       end.inject([]) do |grps, sub|
-        grps.push Datagroup.new(sub)
+        grps.push Datagroup.new(sub, @output)
       end
     end
   end
 
   class Datagroup < Dataset
-    def initialize(point_array)
+    def initialize(point_array, output=STDOUT)
       @points = point_array
+      @output = output
     end
 
     def name

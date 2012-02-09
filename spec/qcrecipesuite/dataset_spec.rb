@@ -2,13 +2,14 @@ require 'spec_helper'
 
 module QCRecipeSuite
   describe Dataset do
+    let(:output) { double('output') }
     context "With one stage group per file" do
       let(:file1) { File.open('data/spec/dataset/points1.csv', 'r') }
       let(:file2) { File.open('data/spec/dataset/points2.csv', 'r') }
       let(:file3) { File.open('data/spec/dataset/points3.csv', 'r') }
-      let(:set1) { Dataset.new(file1) }
-      let(:set2) { Dataset.new(file2) }
-      let(:set3) { Dataset.new(file3) }
+      let(:set1) { Dataset.new(file1, output) }
+      let(:set2) { Dataset.new(file2, output) }
+      let(:set3) { Dataset.new(file3, output) }
       let(:mean_delta) { 0.01 }
       let(:stdev_delta) { 0.000001 }
 
@@ -20,10 +21,12 @@ module QCRecipeSuite
 
       describe "#similar_to?" do
         it "should return true for a similar set" do
+          output.should_receive(:puts).once
           set1.should be_similar_to(set2)
         end
 
         it "should return false for a dissimilar set" do
+          output.should_receive(:puts).twice
           set1.should_not be_similar_to(set3)
           set2.should_not be_similar_to(set3)
         end
@@ -77,33 +80,47 @@ module QCRecipeSuite
         let(:file1) { File.open('data/spec/dataset/2groups-original.csv', 'r') }
         let(:file2) { File.open('data/spec/dataset/2groups-good.csv', 'r') }
         let(:file3) { File.open('data/spec/dataset/2groups-bad.csv', 'r') }
-        let(:set1) { Dataset.new(file1) }
-        let(:set2) { Dataset.new(file2) }
-        let(:set3) { Dataset.new(file3) }
+        let(:set1) { Dataset.new(file1, output) }
+        let(:set2) { Dataset.new(file2, output) }
+        let(:set3) { Dataset.new(file3, output) }
         let(:mean_delta) { 0.01 }
         let(:stdev_delta) { 0.000001 }
 
         describe "new dataset" do
           it "should have the correct number of points" do
             set1.should have(60).points
+            set2.should have(60).points
+            set3.should have(60).points
           end
 
           it "should have the correct number of groups" do
             set1.should have(2).groups
+            set2.should have(2).groups
+            set3.should have(2).groups
           end
           it "should have the correct number of points in each subgroup" do
             set1.groups[0].should have(30).points
             set1.groups[1].should have(30).points
+            set2.groups[0].should have(30).points
+            set2.groups[1].should have(30).points
+            set3.groups[0].should have(30).points
+            set3.groups[1].should have(30).points
           end
         end
 
         describe "#similar_to?" do
           it "should return true for a similar set" do
+            output.should_receive(:puts).twice
             set1.should be_similar_to(set2)
           end
 
           it "should return false for a dissimilar set" do
+            output.should_receive(:puts).twice
             set1.should_not be_similar_to(set3)
+          end
+
+          it "should return false for another dissimilar set" do
+            output.should_receive(:puts).twice
             set2.should_not be_similar_to(set3)
           end
         end
@@ -151,9 +168,9 @@ module QCRecipeSuite
         let(:file1) { File.open('data/spec/dataset/2groups-4pts-original.csv', 'r') }
         let(:file2) { File.open('data/spec/dataset/2groups-4pts-good.csv', 'r') }
         let(:file3) { File.open('data/spec/dataset/2groups-4pts-bad.csv', 'r') }
-        let(:set1) { Dataset.new(file1) }
-        let(:set2) { Dataset.new(file2) }
-        let(:set3) { Dataset.new(file3) }
+        let(:set1) { Dataset.new(file1, output) }
+        let(:set2) { Dataset.new(file2, output) }
+        let(:set3) { Dataset.new(file3, output) }
         let(:mean_delta) { 0.01 }
         let(:stdev_delta) { 0.000001 }
 
@@ -173,11 +190,17 @@ module QCRecipeSuite
 
         describe "#similar_to?" do
           it "should return true for a similar set" do
+            output.should_receive(:puts).twice
             set1.should be_similar_to(set2)
           end
 
           it "should return false for a dissimilar set" do
+            output.should_receive(:puts).twice
             set1.should_not be_similar_to(set3)
+          end
+
+          it "should return false for another dissimilar set" do
+            output.should_receive(:puts).twice
             set2.should_not be_similar_to(set3)
           end
         end
