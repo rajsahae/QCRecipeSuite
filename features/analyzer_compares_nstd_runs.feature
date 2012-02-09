@@ -14,20 +14,32 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
   Scenario: Comparison of identical NanoStandard N2000 DB files
     Given two database csv files "data/cucumber/original.csv" and "data/cucumber/copy.csv"
     When compared to each other
-    Then the analyzer should print "FULL SET PASSED"
-    And the analyzer should print "PASSED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    Then the analyzer should print "PASSED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    And the analyzer should print "FULL SET PASSED"
 
   Scenario: Comparison of different NanoStandard N2000 DB files
     Given two database csv files "data/cucumber/original.csv" and "data/cucumber/bad.csv"
     When compared to each other
-    Then the analyzer should print "FULL SET FAILED"
+    Then the analyzer should print "FAILED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    And the analyzer should print "FULL SET FAILED"
 
   Scenario: Comparison of good DB files with 2 stage groups
     Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-good.csv"
     When compared to each other
-    Then the analyzer should print "FULL SET PASSED"
+    Then the analyzer should print "PASSED - SQC Acq-SR OCD VIS:4X Pad5 Vis:SQC NSTD:# 24"
+    And the analyzer should print "PASSED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    And the analyzer should print "FULL SET PASSED"
 
   Scenario: Comparison of bad DB files with 2 stage groups
     Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-bad.csv"
     When compared to each other
-    Then the analyzer should print "FULL SET FAILED"
+    Then the analyzer should print "FAILED - SQC Acq-SR OCD VIS:4X Pad5 Vis:SQC NSTD:# 24"
+    And the analyzer should print "FAILED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    And the analyzer should print "FULL SET FAILED"
+
+  Scenario: Comparison of one good DB file and one bad one, both with 2 stage groups
+    Given two database csv files "data/cucumber/2groups.csv" and "data/cucumber/2groups-one-bad.csv"
+    When compared to each other
+    Then the analyzer should print "PASSED - SQC Acq-SR OCD VIS:4X Pad5 Vis:SQC NSTD:# 24"
+    And the analyzer should print "FAILED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
+    And the analyzer should print "FULL SET FAILED"
