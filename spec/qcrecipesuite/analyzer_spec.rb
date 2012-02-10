@@ -7,9 +7,9 @@ module QCRecipeSuite
     describe "#compare" do
 
       let(:output) { double('output').as_null_object }
-      let(:original) { File.new('data/spec/analyzer/original.csv', 'r') }
-      let(:copy) { File.new('data/spec/analyzer/copy.csv', 'r') }
-      let(:bad) { File.new('data/spec/analyzer/bad.csv', 'r') }
+      let(:original) { File.open('data/spec/analyzer/original.csv', 'r') }
+      let(:copy) { File.open('data/spec/analyzer/copy.csv', 'r') }
+      let(:bad) { File.open('data/spec/analyzer/bad.csv', 'r') }
       let(:analyzer) { Analyzer.new(output) }
 
       it "prints PASSED for two files that are exactly the same" do
