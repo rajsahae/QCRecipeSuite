@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
+
 class Output
   def messages
     @messages ||= []

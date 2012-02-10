@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+# encoding: UTF-8
 module QCRecipeSuite
   class Analyzer
     def initialize(output)
