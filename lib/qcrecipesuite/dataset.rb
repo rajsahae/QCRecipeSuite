@@ -51,23 +51,25 @@ module QCRecipeSuite
       end
     end
 
-    def Dataset.pass group
-      group.puts 'PASSED' + ' - ' + group.name
-      return true
-    end
+    class << self
+      def pass group
+        group.puts 'PASSED' + ' - ' + group.name
+        return true
+      end
 
-    def Dataset.fail group
-      group.puts 'FAILED' + ' - ' + group.name
-      return false
-    end
+      def fail group
+        group.puts 'FAILED' + ' - ' + group.name
+        return false
+      end
 
-    def Dataset.skip group
-      group.puts 'SKIPPED' + ' - ' + group.name
-      return true
-    end
+      def skip group
+        group.puts 'SKIPPED' + ' - ' + group.name
+        return true
+      end
 
-    def Dataset.within_each_others_limits?(set1, set2)
-      set1.within_limits_of?(set2) && set2.within_limits_of?(set1)
+      def within_each_others_limits?(set1, set2)
+        set1.within_limits_of?(set2) && set2.within_limits_of?(set1)
+      end
     end
 
     def within_limits_of? otherset
