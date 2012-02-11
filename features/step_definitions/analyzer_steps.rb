@@ -16,8 +16,8 @@ def output
 end
 
 Given /^two database csv files "([^"]*)" and "([^"]*)"$/ do |file1, file2|
-  @file1 = File.open(file1, 'r')
-  @file2 = File.open(file2, 'r')
+  @file1 = File.open(file1, 'r:Windows-1252')
+  @file2 = File.open(file2, 'r:Windows-1252')
 end
 
 When /^compared to each other$/ do

@@ -5,7 +5,7 @@ require 'spec_helper'
 module QCRecipeSuite
   describe Point do
     context "New Point" do
-      let(:single_point) { File.open('data/spec/point/point.csv', 'r') }
+      let(:single_point) { File.open('data/spec/point/point.csv', 'r:Windows-1252') }
       let(:datetime1) { DateTime.new(y=2011, m=8, d=27, h=0, min=24) }
       let(:parameters) do
         { :point => "1 (LAMPEXP)",
@@ -75,13 +75,13 @@ module QCRecipeSuite
     context "Point bugs" do
       context "dealing with different data formats" do
         it "should handle formats after being saved in excel" do
-          File.open("data/spec/point/date1.csv", 'r') do |date1|
+          File.open("data/spec/point/date1.csv", 'r:Windows-1252') do |date1|
             Point.new(date1.readlines).should_not raise_error(ArgumentError)
           end
         end
 
         it "should handle formats straight from N2000" do
-          File.open("data/spec/point/date2.csv", 'r') do |date2|
+          File.open("data/spec/point/date2.csv", 'r:Windows-1252') do |date2|
             Point.new(date2.readlines).should_not raise_error(ArgumentError)
           end
         end

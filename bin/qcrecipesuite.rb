@@ -9,8 +9,8 @@ file1, file2 = ARGV[0], ARGV[1]
   raise ArgumentError.new "File: #{file} doesn't exist" unless File.exists?(file)
 end
 analyzer = QCRecipeSuite::Analyzer.new(STDOUT)
-File.open(file1, 'r') do |first|
-  File.open(file2, 'r') do |second|
+File.open(file1, 'r:Windows-1252') do |first|
+  File.open(file2, 'r:Windows-1252') do |second|
     analyzer.compare(first, second)
   end
 end

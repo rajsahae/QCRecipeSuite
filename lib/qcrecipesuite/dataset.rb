@@ -7,7 +7,7 @@ module QCRecipeSuite
     def initialize(file, output=STDOUT)
       @output = output
       leftovers = file.inject([]) do |temp, line|
-        if line.force_encoding('Windows-1252') =~ /^[\s,]*$/
+        if line =~ /^[\s,]*$/
           points << Point.new(temp)
           temp.clear
         else

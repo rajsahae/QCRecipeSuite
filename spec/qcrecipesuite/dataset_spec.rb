@@ -6,9 +6,9 @@ module QCRecipeSuite
   describe Dataset do
     let(:output) { double('output') }
     context "With one stage group per file" do
-      let(:file1) { File.open('data/spec/dataset/points1.csv', 'r') }
-      let(:file2) { File.open('data/spec/dataset/points2.csv', 'r') }
-      let(:file3) { File.open('data/spec/dataset/points3.csv', 'r') }
+      let(:file1) { File.open('data/spec/dataset/points1.csv', 'r:Windows-1252') }
+      let(:file2) { File.open('data/spec/dataset/points2.csv', 'r:Windows-1252') }
+      let(:file3) { File.open('data/spec/dataset/points3.csv', 'r:Windows-1252') }
       let(:set1) { Dataset.new(file1, output) }
       let(:set2) { Dataset.new(file2, output) }
       let(:set3) { Dataset.new(file3, output) }
@@ -79,9 +79,9 @@ module QCRecipeSuite
 
     context "With 2 stage groups per file" do
       context "With 30 points per stage group" do
-        let(:file1) { File.open('data/spec/dataset/2groups-original.csv', 'r') }
-        let(:file2) { File.open('data/spec/dataset/2groups-good.csv', 'r') }
-        let(:file3) { File.open('data/spec/dataset/2groups-bad.csv', 'r') }
+        let(:file1) { File.open('data/spec/dataset/2groups-original.csv', 'r:Windows-1252') }
+        let(:file2) { File.open('data/spec/dataset/2groups-good.csv', 'r:Windows-1252') }
+        let(:file3) { File.open('data/spec/dataset/2groups-bad.csv', 'r:Windows-1252') }
         let(:set1) { Dataset.new(file1, output) }
         let(:set2) { Dataset.new(file2, output) }
         let(:set3) { Dataset.new(file3, output) }
@@ -167,9 +167,9 @@ module QCRecipeSuite
       end
 
       context "With 2 points per stage group" do
-        let(:file1) { File.open('data/spec/dataset/2groups-4pts-original.csv', 'r') }
-        let(:file2) { File.open('data/spec/dataset/2groups-4pts-good.csv', 'r') }
-        let(:file3) { File.open('data/spec/dataset/2groups-4pts-bad.csv', 'r') }
+        let(:file1) { File.open('data/spec/dataset/2groups-4pts-original.csv', 'r:Windows-1252') }
+        let(:file2) { File.open('data/spec/dataset/2groups-4pts-good.csv', 'r:Windows-1252') }
+        let(:file3) { File.open('data/spec/dataset/2groups-4pts-bad.csv', 'r:Windows-1252') }
         let(:set1) { Dataset.new(file1, output) }
         let(:set2) { Dataset.new(file2, output) }
         let(:set3) { Dataset.new(file3, output) }
