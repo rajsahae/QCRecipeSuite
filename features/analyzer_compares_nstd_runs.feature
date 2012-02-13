@@ -43,3 +43,22 @@ Feature: Analyzer compares cycles from NanoStandard between two versions
     Then the analyzer should print "PASSED - SQC Acq-SR OCD VIS:4X Pad5 Vis:SQC NSTD:# 24"
     And the analyzer should print "FAILED - SQC Acq-SR OCD Short2 FX:4X Pad6 FX:SQC NSTD:# 24"
     And the analyzer should print "FULL SET FAILED"
+
+  Scenario: Comparison of DB files with two matching groups and 2 non-matching groups interleaved
+    Given two database csv files "data/cucumber/4groups-interleaved-1.csv" and "data/cucumber/4groups-interleaved-2.csv"
+    When compared to each other
+    Then the analyzer should print "PASSED - "
+    And the analyzer should print "FAILED - "
+    And the analyzer should print "PASSED - "
+    And the analyzer should print "FAILED - "
+    And the analyzer should print "FULL SET FAILED"
+
+  Scenario: Comparison of DB files with one file having groups the other file doesn't
+    Given two database csv files "data/cucumber/4groups-interleaved-1.csv" and "data/cucumber/3groups.csv"
+    When compared to each other
+    Then the analyzer should print "PASSED - "
+    And the analyzer should print "PASSED - "
+    And the analyzer should print "PASSED - "
+    And the analyzer should print "SKIPPED - "
+    And the analyzer should print "FULL SET PASSED"
+
